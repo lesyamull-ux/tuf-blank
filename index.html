@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ТЮФ — рабочий бланк</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E8ECF0;--surface:#F6F8FA;--card:#FFFFFF;--ink:#1D2733;--muted:#5B6978;--line:#C8D2DC;--rule:#DCE5EE;
+  --accent:#2F6B5E;--accent-ink:#FFFFFF;--low:#8A4B5B;--mid:#47658D;--high:#37725D;--hi-bg:#E3EFEA;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141A21;--surface:#1B232C;--card:#212B36;--ink:#E3E9EF;--muted:#95A3B2;--line:#34424F;--rule:#2B3743;
+    --accent:#6DB6A3;--accent-ink:#0E1916;--low:#D59AAA;--mid:#92B0D9;--high:#84C5AB;--hi-bg:#203A33;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141A21;--surface:#1B232C;--card:#212B36;--ink:#E3E9EF;--muted:#95A3B2;--line:#34424F;--rule:#2B3743;
+  --accent:#6DB6A3;--accent-ink:#0E1916;--low:#D59AAA;--mid:#92B0D9;--high:#84C5AB;--hi-bg:#203A33;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+h1{font:500 1.15rem/1.2 "Literata",Georgia,serif;margin:0}
+nav{display:flex;gap:4px;margin-left:auto}
+nav a{color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;font-weight:500}
+nav a[aria-current="page"]{background:var(--ink);color:var(--surface)}
+main{max-width:960px;margin:0 auto;padding:24px 20px 64px}
+section[hidden]{display:none}
+h2{font:500 1.4rem/1.25 "Literata",Georgia,serif;margin:0 0 8px}
+h3{font-size:1rem;margin:24px 0 8px}
+p{max-width:68ch}
+.muted{color:var(--muted)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+button.ghost{background:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{width:100%;min-height:160px;resize:vertical;font-family:"Literata",Georgia,serif;line-height:1.6}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.tablewrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{color:var(--muted);font-weight:500}
+td.num{color:var(--muted);width:2.5em}
+td select{max-width:220px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center}
+.empty a{color:var(--accent)}
+
+/* сессия */
+.sess-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.sess-top label{display:flex;gap:8px;align-items:center}
+.progress{height:4px;background:var(--rule);border-radius:2px;margin:16px 0 20px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent)}
+.card{position:relative;background:var(--card);border-radius:4px;padding:28px 32px 32px 56px;min-height:190px;
+  box-shadow:0 1px 0 var(--line),0 12px 28px -18px rgba(20,30,40,.45);
+  background-image:linear-gradient(var(--card) 52px,transparent 52px),repeating-linear-gradient(var(--card) 0 31px,var(--rule) 31px 32px);
+}
+.card::before{content:"";position:absolute;left:38px;top:0;bottom:0;width:1px;background:var(--low);opacity:.45}
+.card-no{font-size:.85rem;color:var(--muted);height:28px}
+.phrase{font:400 clamp(1.25rem,3.4vw,1.65rem)/32px "Literata",Georgia,serif;margin:4px 0 0;max-width:40ch}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+.lvl h4{margin:0 0 6px;font-size:.85rem;font-weight:500;color:var(--muted)}
+.lvl button{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:6px;text-align:left;border-left:4px solid var(--c)}
+.lvl button.sel{background:var(--c);border-color:var(--c);color:var(--card)}
+kbd{font:500 .8rem "Onest",sans-serif;color:inherit;opacity:.65;border:1px solid currentColor;border-radius:4px;padding:0 5px;margin-left:8px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;margin-top:16px}
+.nav .sel{background:var(--ink);color:var(--surface)}
+.done{background:var(--hi-bg);border-radius:10px;padding:12px 16px;margin-top:16px}
+.done a{color:var(--accent);font-weight:500}
+
+/* результаты */
+.lvlhead{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 6px;border-bottom:2px solid var(--c);padding-bottom:4px}
+.lvlhead strong{font-weight:600}
+.brow{display:grid;grid-template-columns:minmax(150px,220px) 1fr 3.5em;gap:10px;align-items:center;margin:6px 0;font-size:.95rem}
+.btrack{height:14px;background:var(--rule);border-radius:3px;overflow:hidden}
+.btrack span{display:block;height:100%;background:var(--c)}
+.brow .n{text-align:right;font-variant-numeric:tabular-nums}
+.matrix td,.matrix th{text-align:center;padding:6px;min-width:2.4em;font-variant-numeric:tabular-nums}
+.matrix th.rowh{text-align:left;white-space:nowrap}
+.matrix td.diag{background:var(--hi-bg);font-weight:600}
+.matrix td.off{color:var(--ink);font-weight:600}
+.amb li{margin:4px 0;font-family:"Literata",Georgia,serif}
+.stat{font:500 1.6rem "Literata",Georgia,serif}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 16px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+@media (max-width:560px){.card{padding:24px 18px 28px 40px}.card::before{left:26px}.brow{grid-template-columns:1fr 3em}.brow .btrack{grid-column:1/-1;order:3}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <h1>Тест юмористических фраз · рабочий бланк</h1>
+  <nav>
+    <a href="#phrases" data-view="phrases">Фразы</a>
+    <a href="#session" data-view="session">Сессия</a>
+    <a href="#results" data-view="results">Результаты</a>
+    <a href="#archive" data-view="archive">Архив</a>
+  </nav>
+</div></header>
+<main>
+  <section id="phrases"></section>
+  <section id="session" hidden></section>
+  <section id="results" hidden></section>
+  <section id="archive" hidden></section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const THEMES=[
+  {id:'t1',name:'Агрессия – самозащита',level:'low'},
+  {id:'t2',name:'Секс',level:'low'},
+  {id:'t3',name:'Пагубные пристрастия',level:'low'},
+  {id:'t4',name:'Мода',level:'mid'},
+  {id:'t5',name:'Деньги',level:'mid'},
+  {id:'t6',name:'Карьера',level:'mid'},
+  {id:'t7',name:'Семейные неурядицы',level:'mid'},
+  {id:'t8',name:'Социальные неурядицы',level:'high'},
+  {id:'t9',name:'Бездарность в искусстве',level:'high'},
+  {id:'t10',name:'Человеческая глупость',level:'high'}
+];
+const LEVELS=[['low','Потребности организма'],['mid','Социальный индивид'],['high','Личностные ценности']];
+const OTHER='-';
+const themeById=id=>THEMES.find(t=>t.id===id);
+const hotkey=i=>String((i+1)%10);
+
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const DEFAULT_PHRASES=[
+"Перья у писателя были. Ему не хватало крыльев.",
+"Чем дальше хочешь прыгнуть, тем ниже нужно согнуться.",
+"Счастье не в деньгах, а в их количестве.",
+"Крик моды понятнее всего на чужом языке.",
+"Без женщин жить нельзя на свете — тем более в темноте.",
+"Чтобы как следует понять душу человека, лучше всего её вынуть.",
+"Дурак, совершенствуясь, становится круглым.",
+"С кем поведёшься, с тем и наберёшься.",
+"Скажи мне, чем ты богат, и я скажу, кем ты служишь.",
+"Инициатива скандала принадлежала мужу, а звуковое оформление — жене.",
+"«Терпение и труд всё перетрут», — напомнил Евгений Сазонов супруге, перетирающей гору посуды.",
+"Всё в природе взаимосвязано, поэтому без связей лучше не жить.",
+"Не брал за горло никого, кроме бутылки.",
+"Морская качка изображена художником с таким сходством, что при одном взгляде на картину тошнило.",
+"Стояла тихая Варфоломеевская ночь.",
+"И фиговый листок отпадает.",
+"Одежда! Мой компас земной, а удача — награда за смелость.",
+"Не было ни гроша, и не будет!",
+"Сила земного притяжения ощущается особенно сильно, когда начинаешь подниматься по служебной лестнице.",
+"Странная картина открылась взору уважаемого классика: это была экранизация его романа.",
+"Если ты считаешь, что уже сделал карьеру, значит, ты не настоящий карьерист.",
+"Мечтал о полёте мысли, но так и не дождался лётной погоды.",
+"Выпился в алкоголики.",
+"«Семь раз отмерь — один отрежь», — объяснял старый палач молодому.",
+"Брала от жизни всё, что входило в моду.",
+"Деньги тем большее зло, чем их меньше.",
+"Мне с вами скучно, мне с вами спать хочется.",
+"Ему пришла в голову мысль, но, не застав никого, ушла.",
+"Выбирая из двух зол, бери оба: потом и этого не будет.",
+"Она шипела на мужа, как газированная вода.",
+"Я не пью больше ста граммов, но, выпив сто граммов, я становлюсь другим человеком, а этот другой пьёт очень много.",
+"Не бойтесь этой гранаты: она ручная.",
+"Дети — цветы жизни. Не давай им, однако, распускаться.",
+"«Не хлебом единым жив человек!» — кричали возбуждённые покупатели в очереди за мясом.",
+"Сколько прекрасных мыслей гибнет в лабиринтах извилин.",
+"Единственное, что было в нём мужественного, он не мог обнаружить из-за приличий.",
+"«Нелёгок этот писательский труд», — говорит Евгений Сазонов, ежедневно относя в приёмный пункт макулатуры по 20 кг произведений своих коллег.",
+"Шагая в ногу с модой, следите, чтобы она не свернула за угол.",
+"Деньги есть деньги! В этой фразе есть глубокий смысл, но нет запятой.",
+"Призвание хорошо, а звание лучше.",
+"Поэт шёл в гору, но гора эта не была Парнасом.",
+"Стриптиз моды: макси, мини, миди, голый король.",
+"Лишь тяжёлый кошелёк позволяет угнаться за модой.",
+"Душит — значит любит. (Дездемона)",
+"В настойчивых поисках братьев по разуму он оказался в вытрезвителе.",
+"Нашёл место в жизни — найди жене.",
+"Писал с принципиальных кассовых позиций.",
+"Защита диссертации пройдёт успешнее, если банкет по этому поводу провести за два-три часа до её начала.",
+"Бог создал женщин глупыми, чтобы они любили мужчин.",
+"Почему чаще всего неограниченные возможности у ограниченных людей?",
+"Ссорясь, они швыряли друг в друга стульями, но ни семейной жизни, ни стульям это не вредило: семья была крепкая, мебель тоже.",
+"Если умный человек идёт в гору, значит, он материально заинтересован.",
+"«У меня ничего не осталось, кроме тебя», — признался он ей… за три дня до зарплаты.",
+"Круглые дураки в люди не выходят. Их выкатывают.",
+"Мясник строил материальное благополучие на чужих костях.",
+"Голова его чего-нибудь да стоила… вместе с бобровой шапкой.",
+"«Пить — здоровью вредить», — сказала Юдифь, отсекая голову ассирийскому военачальнику Олоферну, как только тот уснул, опьянённый вином и ласками Юдифи.",
+"И на «пегасах» порой гарцуют всадники без головы.",
+"Только в очень хорошем настроении она называла получку мужа деньгами.",
+"Те, кому дают на чай, пьют коньяк.",
+"«Удивительное — ядом!» — сказал Сальери.",
+"Нарушение моды королями становится модой для их подданных.",
+"Нетрезвый взгляд на вещи помогает обходиться без них.",
+"Жена шефа много лучше, чем шеф жены.",
+"Если у тебя умная жена, будешь есть плоды с древа познания, если глупая — с дерева жизни.",
+"Бдительный завмаг подвергал неусыпному прощупыванию всё, что у продавщиц пряталось под прилавком.",
+"Когда она заговаривала о чернобурой лисе, муж смотрел на неё волком.",
+"Не только сам укладывался в получку, но и укладывал своих приятелей.",
+"Женщине по служебной лестнице легче идти в короткой юбке.",
+"Когда музы молчат, говорят жёны поэтов.",
+"Дороже всего нам обходится то, что нельзя достать ни за какие деньги.",
+"Хорошо, когда у женщины есть муж, но ещё лучше, когда он чужой.",
+"В повести так много пили, что из неё можно было гнать спирт.",
+"Мечтает устроиться на доходное лобное место.",
+"При вытрезвителе вновь открыта комната матери и ребёнка.",
+"В этой столовой можно не только червячка заморить.",
+"Женщины пьянили его, особенно когда в их обществе он пил водку.",
+"Последний крик моды часто раздавался из-под прилавка.",
+"Если всё время мыслить, на что же существовать?",
+"Быстро подниматься по служебной лестнице: одна «рука» тут, другая — там.",
+"Мода на форму черепа стоила ей многого.",
+"Чем продуктивнее творчество, тем нужнее холодильник.",
+"Ломал голову, а сломал шею.",
+"«А здесь я работаю для потомства», — гордо намекнул Евгений Сазонов, указывая посетителям на диван.",
+"Закон всеобщего тяготения к шаблону.",
+"Всем модам Отелло предпочитал декольте.",
+"Интеллигенты умирают сидя.",
+"Бараны умеют жить: у них самая паршивая овца, а в каракуле ходит.",
+"Сколько ещё Дантесов прозябает в неизвестности!",
+"Забытый писатель искал забвения в вине.",
+"Многие женятся по любви, потому что не имеют возможности жениться по расчёту.",
+"Модельеры призваны одевать женщин. Они же всё время стараются их раздеть.",
+"Не лещь без бутылки.",
+"Даже роль Отелло исполняется правдивее, если есть личная заинтересованность.",
+"Любопытство к женщинам не должно быть праздным.",
+"Перед злоупотреблением не разбалтывай!",
+"Если жена не следит за модой, за ней можно не следить.",
+"Не всякая кучка могучая.",
+"Чем приятнее формы, тем безразличнее содержание.",
+"Графомания — это потребность души или семейного бюджета?"
+];
+/* Клиент обозначается ТОЛЬКО номером: любые нецифровые символы отбрасываются. */
+const CLIENT_MAX=12;
+const digits=s=>String(s==null?'':s).replace(/\D/g,'').slice(0,CLIENT_MAX);
+
+let phrases=load('tuf.phrases',null)||DEFAULT_PHRASES.map(text=>({text,key:''}));
+let session=load('tuf.session',null)||freshSession();
+function freshSession(shuffle=true){
+  const order=phrases.map((_,i)=>i);
+  if(shuffle)for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+  return{id:Date.now(),date:new Date().toISOString(),client:'',answers:{},pos:0,order};
+}
+/* старые сохранения: убрать буквы из номера клиента, добавить id/дату */
+session.client=digits(session.client);
+if(!session.id)session.id=Date.now();
+if(!session.date)session.date=new Date().toISOString();
+function ensureOrder(){if(!session.order||session.order.length!==phrases.length){session=freshSession();save('tuf.session',session)}}
+const saveAll=()=>{save('tuf.phrases',phrases);save('tuf.session',session);archiveCurrent()};
+
+/* ---------- Архив сессий (хранится в браузере, выгружается в файл) ---------- */
+let sessionsArchive=load('tuf.history',[]);
+if(!Array.isArray(sessionsArchive))sessionsArchive=[];
+const themeName=id=>id===OTHER?'Ни к одной теме':(id?(themeById(id)||{name:id}).name:'');
+function buildRec(){
+  const rows=phrases.map((p,i)=>({n:i+1,text:p.text,key:p.key,answer:session.answers[i]||''}));
+  return{id:session.id,client:session.client,date:session.date,total:rows.length,answered:rows.filter(r=>r.answer).length,rows};
+}
+function archiveCurrent(){
+  if(!Object.keys(session.answers).length)return;
+  const rec=buildRec(),k=sessionsArchive.findIndex(h=>h.id===rec.id);
+  if(k>=0)sessionsArchive[k]=rec;else sessionsArchive.push(rec);
+  save('tuf.history',sessionsArchive);
+}
+const csvCell=v=>'"'+String(v).replace(/"/g,'""')+'"';
+function toCsv(recs){
+  const lines=[['Клиент №','Дата','№ фразы','Фраза','Тема по ключу','Ответ клиента'].map(csvCell).join(';')];
+  recs.forEach(r=>r.rows.forEach(w=>lines.push([r.client,String(r.date).slice(0,10),w.n,w.text,themeName(w.key),themeName(w.answer)].map(csvCell).join(';'))));
+  return '﻿'+lines.join('\r\n');
+}
+function download(name,text,type){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+const stamp=()=>new Date().toISOString().slice(0,10);
+function importBackup(text){
+  let data;try{data=JSON.parse(text)}catch(e){return toast('Не удалось прочитать файл')}
+  const src=Array.isArray(data)?data:(data&&Array.isArray(data.sessions)?data.sessions:null);
+  if(!src)return toast('Это не файл резервной копии');
+  let added=0;
+  src.forEach((r,i)=>{
+    if(!r||!Array.isArray(r.rows))return;
+    const rows=r.rows.slice(0,2000).map((w,j)=>({n:+w.n||j+1,text:String(w.text||'').slice(0,1000),key:String(w.key||'').slice(0,10),answer:String(w.answer||'').slice(0,10)}));
+    const d=new Date(r.date);
+    const rec={id:Number(r.id)||Date.now()+i,client:digits(r.client),date:isNaN(d)?new Date().toISOString():d.toISOString(),total:rows.length,answered:rows.filter(x=>x.answer).length,rows};
+    const k=sessionsArchive.findIndex(h=>h.id===rec.id);
+    if(k>=0)sessionsArchive[k]=rec;else{sessionsArchive.push(rec);added++}
+  });
+  save('tuf.history',sessionsArchive);renderArchive();toast(`Загружено сессий: ${src.length}, новых: ${added}`);
+}
+function renderArchive(){
+  const el=document.getElementById('archive');
+  const list=sessionsArchive.slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
+  el.innerHTML=`
+  <h2>Архив</h2>
+  <p class="muted">Каждая сессия сохраняется здесь автоматически — по мере того, как вы относите карточки. Данные лежат только в этом браузере на этом устройстве, никуда не отправляются. Чтобы они не пропали (очистка браузера, другое устройство), скачивайте файл. Клиент обозначается только номером — имён и других данных в бланке нет.</p>
+  <div class="row">
+    <button class="primary" id="csvAll"${list.length?'':' disabled'}>Скачать всё (CSV для Excel)</button>
+    <button id="jsonAll"${list.length?'':' disabled'}>Резервная копия (JSON)</button>
+    <button class="ghost" id="loadBk">Загрузить копию из файла</button>
+    <input type="file" id="bkFile" accept=".json,application/json" hidden>
+  </div>
+  ${list.length?`<div class="tablewrap"><table><thead><tr><th>Клиент №</th><th>Дата</th><th>Отнесено</th><th></th></tr></thead><tbody>
+  ${list.map(r=>`<tr><td>${esc(r.client||'без номера')}</td><td>${esc(new Date(r.date).toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'}))}</td><td>${r.answered} из ${r.total}</td>
+    <td><button class="ghost" data-csv="${r.id}">CSV</button> <button class="ghost" data-rm="${r.id}">Удалить</button></td></tr>`).join('')}
+  </tbody></table></div>`:`<div class="empty"><p>Пока пусто — архив заполнится, когда вы отнесёте первую карточку.</p><a href="#session">Перейти к сессии</a></div>`}`;
+  const byId=id=>sessionsArchive.find(h=>String(h.id)===id);
+  const q=s=>el.querySelector(s);
+  if(list.length){
+    q('#csvAll').onclick=()=>download(`tuf-all-${stamp()}.csv`,toCsv(sessionsArchive),'text/csv;charset=utf-8');
+    q('#jsonAll').onclick=()=>download(`tuf-backup-${stamp()}.json`,JSON.stringify({app:'tuf',version:1,exported:new Date().toISOString(),sessions:sessionsArchive},null,1),'application/json');
+  }
+  q('#loadBk').onclick=()=>q('#bkFile').click();
+  q('#bkFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>importBackup(String(rd.result));rd.readAsText(f)};
+  el.querySelectorAll('[data-csv]').forEach(b=>b.onclick=()=>{const r=byId(b.dataset.csv);if(r)download(`tuf-${r.client||'client'}-${String(r.date).slice(0,10)}.csv`,toCsv([r]),'text/csv;charset=utf-8')});
+  el.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{
+    if(!confirm('Удалить эту сессию из архива? Это нельзя отменить.'))return;
+    sessionsArchive=sessionsArchive.filter(h=>String(h.id)!==b.dataset.rm);save('tuf.history',sessionsArchive);renderArchive();
+  });
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),1800)}
+
+/* ---------- Фразы ---------- */
+function parseLine(line){
+  let [t,k]=line.split('|');t=(t||'').trim().replace(/^\d+[.)]\s*/,'');
+  if(!t)return null;
+  let key='';
+  if(k){k=k.trim().toLowerCase();
+    const n=parseInt(k,10);
+    if(!isNaN(n)&&n>=1&&n<=10)key=THEMES[n-1].id;
+    else if(k){const th=THEMES.find(x=>x.name.toLowerCase().startsWith(k.slice(0,4)));if(th)key=th.id}
+  }
+  return{text:t,key};
+}
+function renderPhrases(){
+  const el=document.getElementById('phrases');
+  const single=phrases.filter(p=>p.key).length;
+  el.innerHTML=`
+  <h2>Набор фраз</h2>
+  <p class="muted">Вставьте фразы из вашего экземпляра методики — по одной на строку. Чтобы сразу указать тему по ключу для однозначной фразы, добавьте после вертикальной черты её номер (1–10) или начало названия: <em>Текст фразы | 5</em> или <em>Текст фразы | деньги</em>. Фразы без темы считаются многозначными. Список хранится только в этом браузере.</p>
+  <textarea id="imp" placeholder="Фраза первая | 5&#10;Фраза вторая&#10;Фраза третья | глупость"></textarea>
+  <div class="row">
+    <button class="primary" id="add">Добавить к списку</button>
+    <button id="replace">Заменить список</button>
+    <button class="ghost" id="builtin">Вернуть встроенный набор</button>
+    <span class="muted">${phrases.length} фраз · однозначных ${single} · многозначных ${phrases.length-single}</span>
+  </div>
+  <details><summary class="muted">Номера тем для ключа</summary>
+    <p>${THEMES.map((t,i)=>`${i+1} — ${esc(t.name)}`).join('<br>')}</p></details>
+  ${phrases.length?`<div class="tablewrap"><table><thead><tr><th>#</th><th>Фраза</th><th>Тема по ключу</th><th></th></tr></thead><tbody>
+  ${phrases.map((p,i)=>`<tr><td class="num">${i+1}</td><td>${esc(p.text)}</td><td><select data-i="${i}" aria-label="Тема по ключу для фразы ${i+1}">
+    <option value="">многозначная</option>${THEMES.map(t=>`<option value="${t.id}"${p.key===t.id?' selected':''}>${esc(t.name)}</option>`).join('')}
+  </select></td><td><button class="ghost" data-del="${i}" aria-label="Удалить фразу ${i+1}">Удалить</button></td></tr>`).join('')}
+  </tbody></table></div>`:''}`;
+  const take=()=>document.getElementById('imp').value.split(/\r?\n/).map(parseLine).filter(Boolean);
+  el.querySelector('#add').onclick=()=>{const n=take();if(!n.length)return toast('Вставьте хотя бы одну фразу');phrases=phrases.concat(n);session=freshSession();saveAll();renderPhrases();toast(`Добавлено: ${n.length}`)};
+  el.querySelector('#replace').onclick=()=>{const n=take();if(!n.length)return toast('Вставьте хотя бы одну фразу');if(phrases.length&&!confirm('Заменить весь список? Ответы текущей сессии сбросятся.'))return;phrases=n;session=freshSession();saveAll();renderPhrases();toast(`Список: ${n.length} фраз`)};
+  el.querySelector('#builtin').onclick=()=>{if(!confirm('Загрузить встроенный набор из 100 фраз? Текущий список, ключ и ответы сессии сбросятся.'))return;phrases=DEFAULT_PHRASES.map(text=>({text,key:''}));session=freshSession();saveAll();renderPhrases();toast('Загружено 100 фраз')};
+  el.querySelectorAll('select[data-i]').forEach(s=>s.onchange=()=>{phrases[+s.dataset.i].key=s.value;saveAll()});
+  el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{phrases.splice(+b.dataset.del,1);session=freshSession();saveAll();renderPhrases()});
+}
+
+/* ---------- Сессия ---------- */
+function renderSession(){
+  const el=document.getElementById('session');
+  if(!phrases.length){el.innerHTML=`<div class="empty"><p>Сначала добавьте фразы.</p><a href="#phrases">Перейти к набору фраз</a></div>`;return}
+  ensureOrder();
+  const total=phrases.length,done=Object.keys(session.answers).length;
+  const pos=Math.min(session.pos,total-1),idx=session.order[pos],cur=session.answers[idx];
+  el.innerHTML=`
+  <div class="sess-top">
+    <label>Клиент № <input id="client" value="${esc(session.client)}" placeholder="только цифры" inputmode="numeric" pattern="[0-9]*" maxlength="${CLIENT_MAX}" autocomplete="off" aria-describedby="clientHint" style="width:11em"></label>
+    <span class="muted" id="clientHint" style="font-size:.85rem">Только цифры — без имён и инициалов</span>
+    <span class="muted">Отнесено ${done} из ${total}</span>
+    <button class="ghost" id="newSess">Новый клиент</button>
+  </div>
+  <div class="progress"><span style="width:${done/total*100}%"></span></div>
+  <article class="card"><div class="card-no">Карточка ${pos+1} из ${total}</div><p class="phrase">${esc(phrases[idx].text)}</p></article>
+  <div class="choices">${LEVELS.map(([lv,lname])=>`<div class="lvl" style="--c:var(--${lv})"><h4>${lname}</h4>
+    ${THEMES.map((t,i)=>t.level===lv?`<button data-t="${t.id}" class="${cur===t.id?'sel':''}">${esc(t.name)}<kbd>${hotkey(i)}</kbd></button>`:'').join('')}</div>`).join('')}
+  </div>
+  <div class="nav">
+    <button id="prev"${pos===0?' disabled':''}>Назад</button>
+    <button data-t="${OTHER}" class="${cur===OTHER?'sel':''}">Ни к одной теме<kbd>−</kbd></button>
+    <button id="next"${pos>=total-1?' disabled':''}>Дальше</button>
+  </div>
+  ${done===total?`<div class="done">Все карточки отнесены. <a href="#results">Открыть результаты</a></div>`:''}`;
+  el.querySelector('#client').oninput=e=>{const v=digits(e.target.value);if(e.target.value!==v)e.target.value=v;session.client=v;saveAll()};
+  el.querySelector('#newSess').onclick=()=>{if(done&&!confirm('Начать новую сессию? Ответы текущего клиента удалятся из бланка.'))return;session=freshSession();saveAll();renderSession()};
+  el.querySelector('#prev').onclick=()=>go(-1);
+  el.querySelector('#next').onclick=()=>go(1);
+  el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>choose(b.dataset.t));
+}
+function go(d){session.pos=Math.max(0,Math.min(phrases.length-1,session.pos+d));saveAll();renderSession()}
+function choose(t){
+  const idx=session.order[session.pos];session.answers[idx]=t;
+  if(session.pos<phrases.length-1)session.pos++;
+  saveAll();renderSession();
+}
+document.addEventListener('keydown',e=>{
+  if(currentView()!=='session'||!phrases.length)return;
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+  if(/^[0-9]$/.test(e.key)){const i=e.key==='0'?9:+e.key-1;choose(THEMES[i].id);e.preventDefault()}
+  else if(e.key==='-'||e.key==='x'){choose(OTHER);e.preventDefault()}
+  else if(e.key==='ArrowLeft')go(-1);
+  else if(e.key==='ArrowRight')go(1);
+});
+
+/* ---------- Результаты ---------- */
+function compute(){
+  const counts={},ambBy={};THEMES.forEach(t=>{counts[t.id]=0;ambBy[t.id]=[]});counts[OTHER]=0;ambBy[OTHER]=[];
+  const mx={};THEMES.forEach(r=>{mx[r.id]={};[...THEMES.map(t=>t.id),OTHER].forEach(c=>mx[r.id][c]=0)});
+  let single=0,match=0,answered=0;
+  for(const [i,a] of Object.entries(session.answers)){
+    const p=phrases[i];if(!p||counts[a]===undefined)continue;
+    answered++;counts[a]++;
+    if(p.key){single++;mx[p.key][a]++;if(p.key===a)match++}
+    else ambBy[a].push(p.text);
+  }
+  return{counts,ambBy,mx,single,match,answered};
+}
+function renderResults(){
+  const el=document.getElementById('results');
+  const r=compute();
+  if(!r.answered){el.innerHTML=`<div class="empty"><p>Пока нет ответов.</p><a href="#session">Перейти к сессии</a></div>`;return}
+  const max=Math.max(...Object.values(r.counts),1);
+  const lvlSum=lv=>THEMES.filter(t=>t.level===lv).reduce((s,t)=>s+r.counts[t.id],0);
+  const pct=n=>Math.round(n/r.answered*100);
+  const usedRows=THEMES.filter(t=>Object.values(r.mx[t.id]).some(v=>v));
+  el.innerHTML=`
+  <h2>Результаты${session.client?': клиент №'+esc(session.client):''}</h2>
+  <p class="muted">Отнесено ${r.answered} из ${phrases.length} карточек. Цифры — материал для беседы, а не самостоятельный вывод.</p>
+  <div class="row"><button class="primary" id="copy">Скопировать сводку</button>
+    <button id="csv">Скачать CSV</button><span class="muted">Сессия также лежит в <a href="#archive">архиве</a>.</span></div>
+
+  <h3>Распределение по темам</h3>
+  ${LEVELS.map(([lv,lname])=>`<div style="--c:var(--${lv})">
+    <div class="lvlhead"><strong>${lname}</strong><span class="muted">${lvlSum(lv)} · ${pct(lvlSum(lv))}%</span></div>
+    ${THEMES.filter(t=>t.level===lv).map(t=>`<div class="brow"><span>${esc(t.name)}</span><div class="btrack"><span style="width:${r.counts[t.id]/max*100}%"></span></div><span class="n">${r.counts[t.id]}</span></div>`).join('')}
+  </div>`).join('')}
+  <div style="--c:var(--muted)"><div class="brow"><span>Ни к одной теме</span><div class="btrack"><span style="width:${r.counts[OTHER]/max*100}%"></span></div><span class="n">${r.counts[OTHER]}</span></div></div>
+
+  ${r.single?`<h3>Однозначные фразы: совпадение с ключом</h3>
+  <p><span class="stat">${r.match} из ${r.single}</span> <span class="muted">(${Math.round(r.match/r.single*100)}%)</span></p>
+  <p class="muted">Строки — тема по ключу, столбцы — куда отнёс клиент. Выделенные числа вне диагонали показывают «сцепленные» темы.</p>
+  <div class="tablewrap"><table class="matrix"><thead><tr><th></th>${THEMES.map((t,i)=>`<th title="${esc(t.name)}">${i+1}</th>`).join('')}<th title="Ни к одной">−</th></tr></thead><tbody>
+  ${usedRows.map(row=>`<tr><th class="rowh">${THEMES.indexOf(row)+1}. ${esc(row.name)}</th>${[...THEMES.map(t=>t.id),OTHER].map(c=>{const v=r.mx[row.id][c];return`<td class="${c===row.id?'diag':(v?'off':'')}">${v||'·'}</td>`}).join('')}</tr>`).join('')}
+  </tbody></table></div>`:''}
+
+  <h3>Многозначные фразы по выбранным темам</h3>
+  ${[...THEMES.map(t=>t.id),OTHER].filter(id=>r.ambBy[id].length).map(id=>`<p><strong>${id===OTHER?'Ни к одной теме':esc(themeById(id).name)}</strong> (${r.ambBy[id].length})</p><ul class="amb">${r.ambBy[id].map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`).join('')||'<p class="muted">Нет отнесённых многозначных фраз или в наборе не размечен ключ.</p>'}`;
+  el.querySelector('#copy').onclick=()=>copySummary(r);
+  el.querySelector('#csv').onclick=()=>download(`tuf-${session.client||'client'}-${stamp()}.csv`,toCsv([buildRec()]),'text/csv;charset=utf-8');
+}
+function copySummary(r){
+  const lines=[`ТЮФ — клиент №${session.client||'—'} —${new Date().toLocaleDateString('ru-RU')}`,`Отнесено ${r.answered} из ${phrases.length}`,''];
+  LEVELS.forEach(([lv,lname])=>{
+    const s=THEMES.filter(t=>t.level===lv).reduce((a,t)=>a+r.counts[t.id],0);
+    lines.push(`${lname}: ${s}`);
+    THEMES.filter(t=>t.level===lv).forEach(t=>lines.push(`  ${t.name}: ${r.counts[t.id]}`));
+  });
+  lines.push(`Ни к одной теме: ${r.counts[OTHER]}`);
+  if(r.single)lines.push('',`Совпадение с ключом (однозначные): ${r.match} из ${r.single}`);
+  const txt=lines.join('\n');
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('Сводка скопирована')).catch(()=>{prompt('Скопируйте сводку:',txt)});
+}
+
+/* ---------- Навигация ---------- */
+const VIEWS=['phrases','session','results','archive'];
+function currentView(){const h=location.hash.slice(1);return VIEWS.includes(h)?h:(phrases.length?'session':'phrases')}
+function route(){
+  const v=currentView();
+  VIEWS.forEach(id=>document.getElementById(id).hidden=id!==v);
+  document.querySelectorAll('nav a').forEach(a=>{if(a.dataset.view===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  ({phrases:renderPhrases,session:renderSession,results:renderResults,archive:renderArchive})[v]();
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+route();
+</script>
+</body>
+</html>
